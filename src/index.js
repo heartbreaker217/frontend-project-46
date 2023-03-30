@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import * as fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
