@@ -4,5 +4,5 @@ jobs:
   fourth-step-job:
     runs-on: macos-latest
     steps:
-      - name: my-step
-        run: make lint
+      - name: make lint
+        run: npx eslint .
