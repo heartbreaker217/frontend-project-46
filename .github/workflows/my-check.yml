@@ -1,8 +1,19 @@
 name: fourth-step-action
 on: push
 jobs:
-  fourth-step-job:
-    runs-on: macos-latest
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: make lint
-        run: npx eslint
+      - uses: actions/checkout@v3
+      - name: tests
+        run: |
+          make install
+          make lint
+          make test
+      - name: coverage
+        uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.LOKOT_ID }}
+        with:
+          coverageCommand: make coverage
+          debug: true
