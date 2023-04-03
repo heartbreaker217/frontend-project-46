@@ -1,7 +1,6 @@
-import * as fs from 'fs';
-import path from 'path';
 import _ from 'lodash';
 import getFileExt from './util.js';
+import parse from './parsers.js';
 
 const compare = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
@@ -26,14 +25,15 @@ const compare = (obj1, obj2) => {
 const genDiff = (filepath1, filepath2) => {
   const file1Ext = getFileExt(filepath1);
   const file2Ext = getFileExt(filepath2);
-  if (file1Ext === 'json' && file2Ext === 'json') {
-    const obj1 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath1)));
-    const obj2 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath2)));
+
+  if (file1Ext === file2Ext) {
+    const obj1 = parse(file1Ext, filepath1);
+    const obj2 = parse(file2Ext, filepath2);
     const result = compare(obj1, obj2);
     console.log(result);
     return result;
   }
-  throw new Error('Extension is invalid. Try to compare only ".json" files.');
+  throw new Error('Comparing files have a different extensions. Try to compare files with the same extensions.');
 };
 
 export default genDiff;
