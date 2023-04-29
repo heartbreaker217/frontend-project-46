@@ -8,6 +8,7 @@ program
   .description('Compares two configuration files and shows a difference.')
   .version('1.0.0')
   .option('-f, --format <type>', 'output format')
+  .option('--formatter <type>', 'formatter', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action(genDiff)
   .parse(process.argv);

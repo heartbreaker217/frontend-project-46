@@ -1,35 +1,67 @@
 import _ from 'lodash';
 import getFileExt from './util.js';
 import parse from './parsers.js';
+import stylish from './formatters/formatters.js';
 
-const compare = (obj1, obj2) => {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  const keys = _.union(keys1, keys2).sort().reduce((acc, key) => {
-    let resultStr = acc;
-    if (!Object.hasOwn(obj1, key)) {
-      resultStr += `  + ${key}: ${obj2[key]}\n`;
-    } else if (!Object.hasOwn(obj2, key)) {
-      resultStr += `  - ${key}: ${obj1[key]}\n`;
-    } else if (obj1[key] !== obj2[key]) {
-      resultStr += `  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}\n`;
-    } else {
-      resultStr += `    ${key}: ${obj2[key]}\n`;
-    }
-    return resultStr;
-  }, '{\n');
-
-  return keys.concat('}');
+const formatters = {
+  stylish,
 };
 
-const genDiff = (filepath1, filepath2) => {
+const calculateDiff = (obj1, obj2) => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  const diffTree = _.union(keys1, keys2).sort().reduce((acc, key) => {
+    if (!Object.hasOwn(obj1, key)) {
+      acc[key] = {
+        status: 'added',
+        value: obj2[key],
+      };
+    } else if (!Object.hasOwn(obj2, key)) {
+      acc[key] = {
+        status: 'deleted',
+        value: obj1[key],
+      };
+    } else if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
+      acc[key] = {
+        status: 'tree',
+        children: calculateDiff(obj1[key], obj2[key]),
+      };
+    } else if (obj1[key] !== obj2[key]) {
+      acc[key] = {
+        status: 'edited',
+        value: {
+          key1: obj1[key],
+          key2: obj2[key],
+        },
+      };
+    } else {
+      acc[key] = {
+        status: 'immutable',
+        value: obj1[key],
+      };
+    }
+    return acc;
+  }, {});
+
+  return diffTree;
+};
+
+const genDiff = (filepath1, filepath2, options = { formatter: 'stylish' }) => {
   const file1Ext = getFileExt(filepath1);
   const file2Ext = getFileExt(filepath2);
+
+  const formatter = formatters[options.formatter];
+
+  if (!formatter) {
+    throw Error('Unsupported formatter type');
+  }
 
   if (file1Ext === file2Ext) {
     const obj1 = parse(file1Ext, filepath1);
     const obj2 = parse(file2Ext, filepath2);
-    const result = compare(obj1, obj2);
+    const diffTree = calculateDiff(obj1, obj2);
+    const result = formatter(diffTree);
     console.log(result);
     return result;
   }
