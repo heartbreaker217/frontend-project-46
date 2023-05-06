@@ -131,3 +131,113 @@ Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`);
 });
+
+test('testing json formatter', () => {
+  const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'json' });
+  expect(actual1).toEqual(`{
+  "common": {
+    "status": "tree",
+    "children": {
+      "follow": {
+        "status": "added",
+        "value": false
+      },
+      "setting1": {
+        "status": "immutable",
+        "value": "Value 1"
+      },
+      "setting2": {
+        "status": "deleted",
+        "value": 200
+      },
+      "setting3": {
+        "status": "edited",
+        "value": {
+          "key1": true,
+          "key2": null
+        }
+      },
+      "setting4": {
+        "status": "added",
+        "value": "blah blah"
+      },
+      "setting5": {
+        "status": "added",
+        "value": {
+          "key5": "value5"
+        }
+      },
+      "setting6": {
+        "status": "tree",
+        "children": {
+          "doge": {
+            "status": "tree",
+            "children": {
+              "wow": {
+                "status": "edited",
+                "value": {
+                  "key1": "",
+                  "key2": "so much"
+                }
+              }
+            }
+          },
+          "key": {
+            "status": "immutable",
+            "value": "value"
+          },
+          "ops": {
+            "status": "added",
+            "value": "vops"
+          }
+        }
+      }
+    }
+  },
+  "group1": {
+    "status": "tree",
+    "children": {
+      "baz": {
+        "status": "edited",
+        "value": {
+          "key1": "bas",
+          "key2": "bars"
+        }
+      },
+      "foo": {
+        "status": "immutable",
+        "value": "bar"
+      },
+      "nest": {
+        "status": "edited",
+        "value": {
+          "key1": {
+            "key": "value"
+          },
+          "key2": "str"
+        }
+      }
+    }
+  },
+  "group2": {
+    "status": "deleted",
+    "value": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  "group3": {
+    "status": "added",
+    "value": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  }
+}`);
+});
