@@ -112,7 +112,22 @@ test('testing invalid extensions', () => {
 
 test('testing wrong formatter options', () => {
   expect(() => {
-    genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { formatter: 'style' });
+    genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'style' });
   })
-    .toThrow('Unsupported formatter type');
+    .toThrow('Unsupported format type');
+});
+
+test('testing plain formatter', () => {
+  const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', { format: 'plain' });
+  expect(actual1).toEqual(`Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]`);
 });

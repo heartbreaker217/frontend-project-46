@@ -1,11 +1,7 @@
 import _ from 'lodash';
 import getFileExt from './util.js';
 import parse from './parsers.js';
-import stylish from './formatters/formatters.js';
-
-const formatters = {
-  stylish,
-};
+import formatter from './formatters/index.js';
 
 const calculateDiff = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
@@ -47,21 +43,16 @@ const calculateDiff = (obj1, obj2) => {
   return diffTree;
 };
 
-const genDiff = (filepath1, filepath2, options = { formatter: 'stylish' }) => {
+const genDiff = (filepath1, filepath2, options = { format: 'stylish' }) => {
   const file1Ext = getFileExt(filepath1);
   const file2Ext = getFileExt(filepath2);
-
-  const formatter = formatters[options.formatter];
-
-  if (!formatter) {
-    throw Error('Unsupported formatter type');
-  }
+  const format = formatter(options.format);
 
   if (file1Ext === file2Ext) {
     const obj1 = parse(file1Ext, filepath1);
     const obj2 = parse(file2Ext, filepath2);
     const diffTree = calculateDiff(obj1, obj2);
-    const result = formatter(diffTree);
+    const result = format(diffTree);
     console.log(result);
     return result;
   }
