@@ -9,11 +9,11 @@ const stylish = (diffTree) => {
   const innerStringify = (obj, depth, indentCount) => {
     const indent = indentType.repeat(depth * baseIndentCount - leftOffset);
     const bracketIndent = indentType.repeat(depth * baseIndentCount);
+    const normalize = (data) => (_.isPlainObject(data) ? `${innerStringify(data, depth + 1, indentCount + baseIndentCount)}${bracketIndent}}` : data);
 
     const str = Object.entries(obj).reduce((result, current) => {
       const [currentKey, currentValue] = current;
       const { status, value } = currentValue;
-      const normalize = (data) => (_.isPlainObject(data) ? `${innerStringify(data, depth + 1, indentCount + baseIndentCount)}${bracketIndent}}` : data);
 
       switch (status) {
         case 'tree':

@@ -1,24 +1,25 @@
 import _ from 'lodash';
 
+const normalize = (value) => {
+  if (_.isPlainObject(value)) {
+    return '[complex value]';
+  }
+  return (_.isString(value)) ? `'${value}'` : value;
+};
+
 const plain = (data) => {
-  const normalize = (value) => {
-    if (_.isPlainObject(value)) {
-      return '[complex value]';
-    }
-    return (_.isString(value)) ? `'${value}'` : value;
-  };
   const iter = (currentValue, ancestry) => {
     const result = Object.entries(currentValue).flatMap(([key, val]) => {
       const { status, value } = val;
       const newKey = `${ancestry}.${key}`;
-      const tree = _.trimStart(newKey, '.');
+      const path = _.trimStart(newKey, '.');
       switch (status) {
         case 'added':
-          return `Property '${tree}' was added with value: ${normalize(value)}`;
+          return `Property '${path}' was added with value: ${normalize(value)}`;
         case 'deleted':
-          return `Property '${tree}' was removed`;
+          return `Property '${path}' was removed`;
         case 'edited':
-          return `Property '${tree}' was updated. From ${normalize(value.key1)} to ${normalize(value.key2)}`;
+          return `Property '${path}' was updated. From ${normalize(value.key1)} to ${normalize(value.key2)}`;
         case 'tree':
           return `${iter(val.children, newKey)}`;
         default:

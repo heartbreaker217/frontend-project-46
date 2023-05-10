@@ -1,18 +1,14 @@
-import * as fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
 
-const parse = (format, filepath) => {
-  let parser;
-  if (format === 'json') {
-    parser = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath)));
-  } else if (format === 'yml' || format === 'yaml') {
-    parser = yaml.load(fs.readFileSync(path.resolve(process.cwd(), filepath)));
-  } else {
-    throw new Error('Extension is invalid. Try to compare only JSON or YAML files.');
+const parse = (format, data) => {
+  switch (format) {
+    case 'json':
+      return JSON.parse(data);
+    case 'yaml':
+      return yaml.load(data);
+    default:
+      return yaml.load(data);
   }
-
-  return parser;
 };
 
 export default parse;
