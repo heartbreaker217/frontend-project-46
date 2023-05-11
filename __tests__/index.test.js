@@ -8,7 +8,7 @@ test('testing function genDiff() on JSON', () => {
 
 test('testing function genDiff() on YAML', () => {
   const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml');
-  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/__fixtures__/expectsOfGenDiff/file1file2Stylish.txt').toString());
+  expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Stylish.txt').toString());
 });
 
 test('testing invalid extensions', () => {
@@ -27,10 +27,10 @@ test('testing wrong formatter options', () => {
 
 test('testing plain formatter', () => {
   const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', { format: 'plain' });
-  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/__fixtures__/expectsOfGenDiff/file1file2Plain.txt').toString());
+  expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Plain.txt').toString());
 });
 
 test('testing json formatter', () => {
   const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'json' });
-  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/__fixtures__/expectsOfGenDiff/file1file2JSON.txt').toString());
+  expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2JSON.txt').toString());
 });
