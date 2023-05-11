@@ -14,8 +14,8 @@ const genDiff = (filepath1, filepath2, { format = 'stylish' } = {}) => {
   const obj2 = parse(file2Ext, data2);
 
   const diffTree = calculateDiff(obj1, obj2);
-  const format = formatter(format);
-  const result = format(diffTree);
+  const formatFn = formatter(format);
+  const result = formatFn(diffTree);
   return result;
 };
 
