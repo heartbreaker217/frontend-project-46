@@ -11,7 +11,7 @@ const formatters = {
 const formatter = (type) => {
   const formatFunction = formatters[type];
   if (!formatFunction) {
-    throw Error('Unsupported format type');
+    throw new Error('Unsupported format type');
   }
   return formatFunction;
 };
