@@ -6,7 +6,7 @@
   "main": "gendiff.js",
   "scripts": {},
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/index.js"
   },
   "repository": {
     "type": "git",
