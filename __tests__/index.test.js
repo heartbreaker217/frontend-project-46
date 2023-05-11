@@ -3,7 +3,7 @@ import { readFile } from '../src/filesHandler.js';
 
 test('testing function genDiff() on JSON', () => {
   const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json');
-  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/__fixtures__/expectsOfGenDiff/file1file2Stylish.txt').toString());
+  expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Stylish.txt').toString());
 });
 
 test('testing function genDiff() on YAML', () => {
