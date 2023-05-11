@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "[![Actions Status](https://github.com/heartbreaker217/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/heartbreaker217/frontend-project-46/actions)",
-  "main": "gendiff.js",
+  "main": "src/index.js",
   "scripts": {},
   "bin": {
-    "gendiff": "src/index.js"
+    "gendiff": "gendiff.js"
   },
   "repository": {
     "type": "git",
