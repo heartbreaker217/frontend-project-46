@@ -32,5 +32,5 @@ test('testing plain formatter', () => {
 
 test('testing json formatter', () => {
   const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'json' });
-  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/expectsOfGenDiff/file1file2JSON.txt').toString());
+  expect(actual1).toEqual(readFile('/Users/lokotkov_va/Desktop/codred/HEXLET/frontend-project-46/__fixtures__/expectsOfGenDiff/file1file2JSON.txt').toString());
 });
