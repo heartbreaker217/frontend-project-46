@@ -5,9 +5,10 @@ const parse = (format, data) => {
     case 'json':
       return JSON.parse(data);
     case 'yaml':
+    case 'yml':
       return yaml.load(data);
     default:
-      return yaml.load(data);
+      throw new Error('Extension is invalid. Try to compare only JSON or YAML files.');
   }
 };
 
