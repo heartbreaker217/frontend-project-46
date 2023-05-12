@@ -9,7 +9,6 @@ const formatters = {
 };
 
 const formatter = (type) => {
-  console.log(type);
   const formatFunction = formatters[type];
   if (!formatFunction) {
     throw new Error('Unsupported format type');
