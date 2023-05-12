@@ -3,7 +3,7 @@ import formatter from './formatters/index.js';
 import calculateDiff from './diffMaker.js';
 import { getFileExt, readFile } from './filesHandler.js';
 
-const genDiff = (filepath1, filepath2, { format = 'stylish' } = {}) => {
+const genDiff = (filepath1, filepath2, format) => {
   const file1Ext = getFileExt(filepath1);
   const file2Ext = getFileExt(filepath2);
 
