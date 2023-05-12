@@ -20,17 +20,17 @@ test('testing invalid extensions', () => {
 
 test('testing wrong formatter options', () => {
   expect(() => {
-    genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'style' });
+    genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'style');
   })
     .toThrow('Unsupported format type');
 });
 
 test('testing plain formatter', () => {
-  const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', { format: 'plain' });
+  const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', 'plain');
   expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Plain.txt').toString());
 });
 
 test('testing json formatter', () => {
-  const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', { format: 'json' });
+  const actual1 = genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'json');
   expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2JSON.txt').toString());
 });
