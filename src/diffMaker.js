@@ -1,46 +1,26 @@
 import _ from 'lodash';
 
-const calculateDiff = (obj1, obj2) => {
-  const copyObj1 = _.cloneDeep(obj1);
-  const copyObj2 = _.cloneDeep(obj2);
+const calculateDiff = (data1, data2) => {
+  const keys1 = Object.keys(data1);
+  const keys2 = Object.keys(data2);
+  const keys = _.sortBy(_.union(keys1, keys2));
 
-  const keys1 = Object.keys(copyObj1);
-  const keys2 = Object.keys(copyObj2);
-
-  const diffTree = _.union(keys1, keys2).sort().reduce((acc, key) => {
-    if (!Object.hasOwn(copyObj1, key)) {
-      acc[key] = {
-        status: 'added',
-        value: copyObj2[key],
-      };
-    } else if (!Object.hasOwn(copyObj2, key)) {
-      acc[key] = {
-        status: 'deleted',
-        value: copyObj1[key],
-      };
-    } else if (_.isPlainObject(copyObj1[key]) && _.isPlainObject(copyObj2[key])) {
-      acc[key] = {
-        status: 'tree',
-        children: calculateDiff(copyObj1[key], copyObj2[key]),
-      };
-    } else if (copyObj1[key] !== copyObj2[key]) {
-      acc[key] = {
-        status: 'edited',
-        value: {
-          key1: copyObj1[key],
-          key2: copyObj2[key],
-        },
-      };
-    } else {
-      acc[key] = {
-        status: 'immutable',
-        value: copyObj1[key],
-      };
+  const result = keys.map((key) => {
+    if (!_.has(data1, key)) {
+      return [key, { status: 'added', value: data2[key] }];
     }
-    return acc;
-  }, {});
-
-  return diffTree;
+    if (!_.has(data2, key)) {
+      return [key, { status: 'deleted', value: data1[key] }];
+    }
+    if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
+      return [key, { status: 'tree', children: calculateDiff(data1[key], data2[key]) }];
+    }
+    if (data1[key] !== data2[key]) {
+      return [key, { status: 'edited', value: { key1: data1[key], key2: data2[key] } }];
+    }
+    return [key, { status: 'immutable', value: data1[key] }];
+  });
+  return _.fromPairs(result);
 };
 
 export default calculateDiff;
