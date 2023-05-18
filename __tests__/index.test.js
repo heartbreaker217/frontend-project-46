@@ -25,6 +25,11 @@ test('testing wrong formatter options', () => {
     .toThrow('Unsupported format type');
 });
 
+test('testing stylish formatter', () => {
+  const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.json', 'stylish');
+  expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Stylish.txt').toString());
+});
+
 test('testing plain formatter', () => {
   const actual1 = genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', 'plain');
   expect(actual1).toEqual(readFile('__fixtures__/expectsOfGenDiff/file1file2Plain.txt').toString());
