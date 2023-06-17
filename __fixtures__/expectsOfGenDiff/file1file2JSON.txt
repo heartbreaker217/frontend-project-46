@@ -1,91 +1,83 @@
 {
   "common": {
-    "status": "tree",
+    "type": "tree",
     "children": {
       "follow": {
-        "status": "added",
-        "value": false
+        "type": "added",
+        "value2": false
       },
       "setting1": {
-        "status": "immutable",
-        "value": "Value 1"
+        "type": "immutable",
+        "value1": "Value 1"
       },
       "setting2": {
-        "status": "deleted",
-        "value": 200
+        "type": "deleted",
+        "value1": 200
       },
       "setting3": {
-        "status": "edited",
-        "value": {
-          "key1": true,
-          "key2": null
-        }
+        "type": "edited",
+        "value1": true,
+        "value2": null
       },
       "setting4": {
-        "status": "added",
-        "value": "blah blah"
+        "type": "added",
+        "value2": "blah blah"
       },
       "setting5": {
-        "status": "added",
-        "value": {
+        "type": "added",
+        "value2": {
           "key5": "value5"
         }
       },
       "setting6": {
-        "status": "tree",
+        "type": "tree",
         "children": {
           "doge": {
-            "status": "tree",
+            "type": "tree",
             "children": {
               "wow": {
-                "status": "edited",
-                "value": {
-                  "key1": "",
-                  "key2": "so much"
-                }
+                "type": "edited",
+                "value1": "",
+                "value2": "so much"
               }
             }
           },
           "key": {
-            "status": "immutable",
-            "value": "value"
+            "type": "immutable",
+            "value1": "value"
           },
           "ops": {
-            "status": "added",
-            "value": "vops"
+            "type": "added",
+            "value2": "vops"
           }
         }
       }
     }
   },
   "group1": {
-    "status": "tree",
+    "type": "tree",
     "children": {
       "baz": {
-        "status": "edited",
-        "value": {
-          "key1": "bas",
-          "key2": "bars"
-        }
+        "type": "edited",
+        "value1": "bas",
+        "value2": "bars"
       },
       "foo": {
-        "status": "immutable",
-        "value": "bar"
+        "type": "immutable",
+        "value1": "bar"
       },
       "nest": {
-        "status": "edited",
-        "value": {
-          "key1": {
-            "key": "value"
-          },
-          "key2": "str"
-        }
+        "type": "edited",
+        "value1": {
+          "key": "value"
+        },
+        "value2": "str"
       }
     }
   },
   "group2": {
-    "status": "deleted",
-    "value": {
+    "type": "deleted",
+    "value1": {
       "abc": 12345,
       "deep": {
         "id": 45
@@ -93,8 +85,8 @@
     }
   },
   "group3": {
-    "status": "added",
-    "value": {
+    "type": "added",
+    "value2": {
       "deep": {
         "id": {
           "number": 45

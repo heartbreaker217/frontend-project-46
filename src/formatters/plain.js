@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { TYPES as t } from './util.js';
 
 const normalize = (value) => {
   if (_.isPlainObject(value)) {
@@ -10,17 +11,17 @@ const normalize = (value) => {
 const plain = (data) => {
   const iter = (currentValue, ancestry) => {
     const result = Object.entries(currentValue).flatMap(([key, val]) => {
-      const { status, value } = val;
+      const { type, value1, value2 } = val;
       const newKey = `${ancestry}.${key}`;
       const path = _.trimStart(newKey, '.');
-      switch (status) {
-        case 'added':
-          return `Property '${path}' was added with value: ${normalize(value)}`;
-        case 'deleted':
+      switch (type) {
+        case t.added:
+          return `Property '${path}' was added with value: ${normalize(value2)}`;
+        case t.deleted:
           return `Property '${path}' was removed`;
-        case 'edited':
-          return `Property '${path}' was updated. From ${normalize(value.key1)} to ${normalize(value.key2)}`;
-        case 'tree':
+        case t.edited:
+          return `Property '${path}' was updated. From ${normalize(value1)} to ${normalize(value2)}`;
+        case t.tree:
           return `${iter(val.children, newKey)}`;
         default:
           return [];
